@@ -1,0 +1,8 @@
+\contentsline {section}{\tocsection {}{1}{Motivation}}{3}{section.1}%
+\contentsline {section}{\tocsection {}{2}{Module Theory}}{6}{section.2}%
+\contentsline {section}{\tocsection {}{}{Appendix A1: Category Theory}}{9}{section*.2}%
+\contentsline {section}{\tocsection {}{}{Appendix A2 : Zorn’s Lemma and Maximal Ideals:}}{11}{section*.3}%
+\contentsline {section}{\tocsection {}{}{Appendix A3: Localization}}{15}{section*.4}%
+\contentsline {subsection}{\tocsubsection {}{}{Relation Machinery}}{15}{section*.5}%
+\contentsline {subsection}{\tocsubsection {}{2.1}{Quotient Field}}{18}{subsection.2.1}%
+\contentsline {subsection}{\tocsubsection {}{2.2}{Localization Definition}}{19}{subsection.2.2}%
