@@ -22,8 +22,10 @@
 \newtheorem{prob}{Problem}
 \newtheorem{conv}{Convention}
 \DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\ann}{ann}
 \newtheorem{layout}{Layout}
+\newcommand{\degg}{\textup{deg}}
 \newtheorem{ex}{Example}
 \usepackage{lineno}
 \usepackage{hyperref}
@@ -38,9 +40,14 @@
 %% The above lines are for formatting.  In general, you will not want to change these.
 %%Commands to make life easier
 \newcommand{\RR}{\mathbf R}
+\newcommand{\aff}{\mathbb A}
+\newcommand{\ff}{\mathbb F}
 \newcommand{\CC}{\mathbf C}
 \newcommand{\oo}{\mathcal{O}}
 \newcommand{\ZZ}{\mathbf Z}
+\newcommand{\pring}{k[x_1, \ldots , x_n]}
+\newcommand{\polyring}{[x_1, \ldots , x_n]}
+\newcommand{\poly}{\sum_{\alpha} a_{\alpha} x^{\alpha}} 
 \newcommand{\ZZn}[1]{\ZZ/{#1}\ZZ}
 \newcommand{\QQ}{\mathbf Q}
 \newcommand{\rr}{\mathbb R}
@@ -53,6 +60,7 @@
 \newcommand{\qq}{\mathbb Q}
 \newcommand{\calM}{\mathcal M}
 \newcommand{\latex}{\LaTeX}
+\newcommand{\V}{\mathbf V}
 \newcommand{\tex}{\TeX}
 \newcommand{\sm}{\setminus} 
 \newcommand{\dom}{\text{Dom}}
@@ -81,7 +89,8 @@
 \newcommand{\C}{\mathfrak{C}}
 \newcommand{\idealM}{\mathfrak{M}}
 
-\title{On Higher Algebra: In its Modernity \\ With Exposition on its Meta}
+\title{On Higher Algebra}
+\author{Juan Serratos}
 \begin{document}
 \begin{abstract}
 Originally, this paper was meant to be an introduction to basic notions of the tensor product between modules and some closely related material (e.g., biadditive functions, the $\Hom_R (A, B)$ set between two $R$-modules $A$ and $B$,  the category $R$-$\mathbf{Mod}$, etc...), but in trying to fit with my amorphous interests,  and my enjoyment of writing notes to myself, I'm deciding to fit this as a survey of some graduate school topics, that is, the tools and important notions one would typically learn from doing a PhD in pure mathematics, or, to a lesser extent, a Masters. Note: this isn't meant to be a complete overview of said curriculum, but just some topics that I find particularly interesting that require a solid understanding of undergraduate pure mathematics; I think its best understood as a paper that gives you a quick ``What is this thing? And how does it work?" of common \textit{things} in higher mathematics. 
@@ -89,7 +98,6 @@ Originally, this paper was meant to be an introduction to basic notions of the t
 Now, with that out of the way, the topics that I've taken particular interest to discuss are: module theory (that is, essentially linear algebra but taken over a ring $R$ rather than a field, say, $F$), topology, category theory,  (co)homology, homotopy theory, and $\infty$-categories — motivated by reading early segments of Jacob Lurie's \textit{Higher Topos Theory}.  (However, I hope to further revise this \textit{paper} to include some sort of introduction to $p$-adic Hodge theory and the work of Peter Scholze with his notion of \textit{perfectoid rings and spaces}, but that'll require me to explain/develop the machinery in algebraic and arithmetic geometry, so we'll see). 
 \end{abstract}
 \maketitle
-\newpage
 \tableofcontents
 \newpage
 \section{Motivation}
@@ -193,7 +201,7 @@ A \times B \arrow[rrrr, "\eta"] \arrow[rrrruu, "\partial"] \arrow[rrrrdd, "\part
 \end{proof} 
 \newpage 
 \section{Module Theory}
-
+\subsection{Definition and Examples}
 To establish some common notation, and provide a general refresher, we'll go through an introduction to the ideas of module theory. If this topic is unknown to you, it's a \textit{weaker} theory of vector spaces: a vector space takes its scalars from a field (e.g., $\rr$, $\cc$, $\qq$, etc...), while a module takes its scalars from a ring (e.g., $\zz$, $\zz [i]$, etc...).
 
 Some lore from the famous \textit{Abstract Algebra} by Dummit $\&$ Foote: ``The use of modules was pioneered by one of the most prominent mathematicians of the first part of this century, Emmy Noether, who led the way in demonstrating the power and elegance of this structure. We shall see that vector spaces are just special types of modules which arise when the underlying ring is a field. If $R$ is a ring, the definition of an $R$-module $M$ is closely analogous to the definition of a group action where $R$ plays the role of the group and $M$ the role of the set. The additional axioms for a module require that $M$ itself have more structure (namely that M be an abelian group). Modules are the `representation objects' forrings, i.e., they are, by definition, algebraic objects on which rings act. As the theory develops it will become apparent how the structure of the ring $R$ (in particular, the structure and wealth of its ideals) is reflected by the structure of its modules and vice versa in the same way that the structure of the collection of normal subgroups of a group was reflected by its permutation representations."
@@ -263,12 +271,32 @@ For $ r \in R$, define \[ r\overline{x} = \overline{rx}, \; r \in R, x \in {_RM}
 Then $M/N$ becomes an $R$-module ($_R M/N$), which is called the \textbf{factor module} of $M$ modulo $N$. 
 
 Let $_RM$ be an $R$-module and $s \in R$. Then $s$ is called a \textbf{zero-divisor} of $_RM$ if there exists an $x \in M_R \setminus \{ 0 \}$ such that $sx = 0$. Naturally, $s=0$ is called the trivial zero-divisor of $M$. Let $X$ be a subset of $_RM$. For $r \in R$, we write $rX = \{ rx \mid x \in X \}$.  Define \[ \ann_R (X) = \{ r \in R \mid rX = 0 \} ,\]which is an ideal $R$, called the \textbf{annihilator} of $X$. Correspondingly, for a subset $A$ of $R$, define \[ \ann_{_RM} (A) = \{ x \in _RM \mid Ax = 0 \}, \] which is a submodule of $M$, called the \textbf{annihilator} of $A$. 
-\begin{rem} Let $_RM$ be an $R$-module. If $\ann_R (M) = 0$, then $M$ is called a \textbf{faithful module}. 
+%\begin{rem} Let $_RM$ be an $R$-module. If $\ann_R (M) = 0$, then $M$ is called a \textbf{faithful module}.  \end{rem}  \begin{ex} If $\idealA$ is an ideal of $R$ and $_RM$ is an $R$-module with $\idealA {_RM} = 0$, then  \end{ex} 
+\subsection{Direct Products and Direct Sums}
+
+Let $\{ A_i \}_{i \in I}$ be a family of rings. The product set $\prod_{i \in I} A_i$ has the structure of a ring with addition and multiplication defined component-wise, that is,  $(a_i) + (b_i) = (a_i + b_i)$ and $(a_i)(b_i) = (a_i b_i)$. This ring is called the \textbf{direct product} of the family $\{ A_i\}_{i \in I}$. The multiplicative identity of this ring should be pretty obvious: $(1_i) \in \prod_{i \in I} A_i$. 
+
+If we want to investigate the product set where the structure is focused on modules we let $\{ M_i \}_{i \in I}$ be a family of modules and $A$ be a ring, so that the product set $\prod_{i \in I} M_i$ has the structure of an $A$-module with addition and scalar multiplication defined component-wise: $(x_i) + (y_i) = (x_i + y_i)$ and $a(x_i) = (ax_i)$ for all $x_i, y_i \in \prod_{i \in I} M_i$ and $a \in A$. This module is called the \textbf{direct product} of the family $\{ M_i \}_{i \in I}$. 
+
+\begin{rem} The $A$-submodule 
+$$ \bigoplus_{ i \in I} M_i  := \{ (x_i ) \in \prod_{i \in I} M_i \mid x_i = 0 \; \; \textup{for almost all $i$} \}$$ of $\prod_{i \in I} M_i$ is called the \textbf{direct sum} of the family $\{ M_i \}_{i \in I }$. 
 \end{rem} 
-\begin{ex} If $\idealA$ is an ideal of $R$ and $_RM$ is an $R$-module with $\idealA {_RM} = 0$, then 
-\end{ex} 
+
+The direct product and direct sum of a finite family of modules $M_1, M_2, \ldots, M_n$ are also written, respectively, as 
+$$M_1 \times M_2 \times \cdots \times M_n \; \; \textup{and} \; \; M_1 \oplus M_2 \oplus \cdots \oplus M_n.$$
+Now, if the indexing set $I$ is finite then the direct product and the direct sum coincide, and so either term is can be used; but we use the convention of using the direct sum for modules and the direct product for rings. 
+
+Additionally, on that note, the abelian group of $A$-linear (module) homomorphisms from the direct sum to some $A$-module $N$ is naturally isomorphic to the direct product of the the abelian groups of $A$-linear homomorphisms from $M_i$ to $N$:
+$$ \Hom_A \left( \bigoplus_{i \in I} M_i , N \right) \cong \prod_{i \in I} \Hom_A (M_i, N).$$
+\subsection{Exact Sequences}
+
+Consider a finite or infinite sequence
+$$\begin{tikzcd}
+\cdots \arrow[r] & M_{i+1} \arrow[r, "\partial_{i+1}"] & M_i \arrow[r, "\partial_i"] & M_{i-1} \arrow[r] & \cdots
+\end{tikzcd}$$ of $A$-homomorphisms, or, of $A$-modules. We say that $M_i$ is an \textbf{intermediary} term of this sequence if $\partial_{i+1}$ and $\partial_i$ exist — additionally, $i$ is called the intermediary index. The sequence is said to be a \textbf{complex} if $\partial_i \partial_{i+1} = 0$; that is, if $ \im (\partial_{i+1}) \subseteq \ker (\partial_i)$ for every intermediary $i$. The sequence is said to be \textbf{exact at} an intermediary $M_i$ if $\im (\partial_{i+1}) = \ker (\partial_i)$, and is said to be \textbf{exact} if it is exact at every intermediary $M_i$. 
 \newpage
-\section*{Appendix A1: Category Theory}
+\section{Category Theory}
+\subsection{Definition and Examples}
 \begin{defi} A \textbf{category} $\mathbf{C}$ is a collection of \textbf{object} and \textbf{morphisms}, which are maps between objects. These must satisfy the following conditions: 
 \begin{itemize}
 \item[\textup{(i)}] Given objects $x, y \in \cat$, $\Hom_{\cat} (x, y)$ denotes the morphisms from $x$ to $y$. This may be an empty. 
@@ -353,9 +381,168 @@ X_1 \arrow[rruu, "f_1"] \arrow[rr, "i_1"'] &  & X_1 \coprod X_2 \arrow[uu, "f", 
 \begin{rem} Although, in Definition 3, I've chosen $\coprod$ to represent the coproduct, I will be choosing $\bigoplus$ for later matters. The main reason I did this was to show how the coproduct of a set of objects is essentially their union — $\coprod$ vaguely represents $\bigcup$, and this was appropriate since coproducts have the structural properties of a union.
 \end{rem} 
 
-
+\section{Homology}
 \newpage 
-\section*{Appendix A2 : Zorn’s Lemma and Maximal Ideals:}
+\section{Topology}
+\subsection{Topological Spaces}
+\begin{defi} Let $X$ be a non-empty set. A set $\mathcal{O}$ of subsets of $X$ is said to be a \textup{\textbf{topology}} on $X$ if 
+\begin{itemize}
+	\item [\textup{(i)}] $X$ and the empty set, $\varnothing$, belong to $\mathcal{O}$, i.e., $X,\varnothing \in \mathcal{O}$; 
+	\item [\textup{(ii)}] the union of any (finite or infinite) number of sets in $\mathcal{O}$ belong to $\mathcal{O}$ again; and
+	\item [\textup{(iii)}] the intersection of any two sets in $\mathcal{O}$ belongs to $\mathcal{O}$.
+\end{itemize}
+The pair $(X, \mathcal{O})$ is called a \textup{\textbf{topological space}}. 
+\end{defi}
+\begin{ex} Let $X = \{a, b, c, d, e, f \}$ and $\mathcal{O}_1 = \{ X, \varnothing, \{a \}, \{c,d \}, \{a, c, d \}, \{b, c, d, e, f \} \}$. Then $\mathcal{O}_1$ satisfies all the three conditions, so $\mathcal{O}_1$ is a topology and $(X, \mathcal{O}_1)$ is a topological space. 
+\end{ex}
+
+\begin{ex} Let $X = \{a, b, c, d, e \}$ and $\mathcal{O}_2 = \{ X, \varnothing, \{a \}, \{c, d \}, \{a, c, e \}, \{b, c, d \} \}$. Then $\mathcal{O}_2$ is not a topology on $X$ since the union $\{c, d \} \cup \{a, c, e \} = \{a, c, d, e \}$ of two members of $\mathcal{O}_2$ does belong to $\mathcal{O}_2$; that is, $\mathcal{O}_2$ doesn't satisfy condition \textup{(ii)} of Definition 1. (There are in fact more issues with the members of $\mathcal{O}_2$ than the preceding two chosen.)
+\end{ex} 
+\begin{defi} Let $X$ be any non-empty set and let $\mathcal{O}$ be the collection of all subsets of $X$.  Then $\mathcal{O}$ is called the \textup{\textbf{discrete topology}} on the set $X$. The topological space $(X, \mathcal{O})$ is called the \textup{\textbf{discrete space}}. 
+\end{defi} 
+
+``We note that $\mathcal{O}$ is Definition 2. does satisfy the conditions of Definition 1 and so it is indeed a topology."
+
+\begin{defi} Let $X$ be any non-empty set and $\mathcal{O} = \{ X, \varnothing \}$. Then $\mathcal{O}$ is called the \textup{\textbf{indiscrete topology}} and $(X, \mathcal{O})$ is said to be an \textup{\textbf{indiscrete space}}
+\end{defi} 
+
+Once again, $\mathcal{O}$ in Definition 3. satisfies the conditions of a topology in Definition 1, so it is indeed a topology. 
+
+\begin{prop} If $X = \{a, b, c \}$ and $\mathcal{O}$ is a topology on $X$ with $\{a \} \in \mathcal{O}$, $\{ b \} \in \mathcal{O}$, and $\{ c \} \in \mathcal{O}$, then $\mathcal{O}$ is the discrete topology. 
+\end{prop} 
+\begin{proof} Suppose $X = \{a, b, c \}$ and $\mathcal{O}$ is a topology on $X$ with $\{a \} \in \mathcal{O}$, $\{ b \} \in \mathcal{O}$, and $\{ c \} \in \mathcal{O}$. Then, since $\mathcal{O}$ is a topology on $X$, then $\mathcal{O}$ must contain the elements $\varnothing$ and $X$; moreover, since $\mathcal{O}$ is a topology with $\{a \}$, $\{b \}$, and $\{ c\}$, they must fit the conditions of Definition 1., so $\{a, b \}, \{a, c \}, \{b, c \} \in \mathcal{O}$ as well. Thus, $\mathcal{O} = \{ X, \varnothing, \{ a \}, \{b \} , \{ c \} ,\{a, b \}, \{a, c \}, \{b, c \} \}$, and so $\mathcal{O}$ is the collection of all subsets of $X$. Therefore $\mathcal{O}$ is a discrete topology. 
+\end{proof}
+
+A more powerful and general version of Proposition 1:
+\begin{prop} If $(X, \mathcal{O})$ is a topological space such that, for every $x \in X$, the singleton set $\{x \}$ is in $\mathcal{O}$, then $\mathcal{O}$ is a discrete topology.
+\end{prop} 
+\begin{proof} Suppose $(X, \mathcal{O})$ is a topological space such that for every $x \in X$, the singleton set $\{ x \} \in \mathcal{O}$. Note that every set is the union of all its singleton subsets, and so if $S$ is any subset of $X$, then $$S = \bigcup_{x \in S} \{x \}.$$ Since we are given that each $\{ x \} \in \mathcal{O}$, Definition 1. (ii) and the above equation imply that $S \in \mathcal{O}$. As $S$ is an arbitrary subset of $X$, we have that $\mathcal{O}$ is the discrete topology.
+\end{proof}
+
+Note that the equation $S = \bigcup_{x \in S} \{ x \}$ holds even when $S = \varnothing$ — this is called the \textbf{empty union} and its result is simply $\varnothing$. 
+\begin{prop} Let $(X, \oo)$ be any topological space. Then the intersection of any finite number of members of $\oo$ is a member of $\oo$. 
+\end{prop} 
+\begin{proof} Since $(X, \oo)$ is a topological space, then it must work for the case of two sets. More generally, $\bigcap_{x \in \oo}^n x_i$ for $i = 1, 2, \ldots, n$. Suppose $\bigcap_{x \in \oo}^k x_i \in \oo $ for some natural number $k$. Then assume that $x_{k+1} \in \oo$, and so $\bigcap_{x \in \oo}^{k+1} x_i = \bigcap_{x \in \oo}^k x_i \cap x_{k+1}$, and thus $\bigcap_{x \in \oo}^{k+1} x_i \in \oo$, by definition that the intersection of any two sets in $\oo$ belongs to $\oo$ again.
+\end{proof}
+\bigskip
+
+\; \; \textbf{Open Sets:}
+
+Rather than continually referring to ``members of $\oo$," we find it more convenient to give them the name ``open sets." We shall also name the complements of open sets. They will be called ``closed sets." 
+\begin{defi} Let $(X, \oo)$ be any topological space. Then the members of $\oo$ are said to be \textup{\textbf{open sets}}. 
+\end{defi} 
+\begin{prop} If $(X, \oo)$ is any topological space, then 
+\begin{itemize}
+\item [\textup{(i)}] $X$ and $\oo$ are open sets;
+\item [\textup{(ii)}] the union of any (finite or infinite) number of open sets is an open set; and 
+\item [\textup{(iii)}] the intersection of any finite number of open sets is an open set. 
+\end{itemize}
+\end{prop} 
+\begin{proof} The first two properties fall from Definition 1, and three falls from Proposition 3.
+\end{proof}
+\begin{defi} Let $(X, \oo)$ be a topological space. A subset $S$ of $X$ is said to be a \textup{\textbf{closed set}} in $(X, \oo)$ if its complement in $X$, namely $X \setminus S = \{ x \mid x \in X \wedge x \notin S \}$, is open in $(X, \oo)$. 
+\end{defi} 
+\begin{ex} From Example 1, let $X = \{a, b, c, d, e, f \}$ and $\mathcal{O}_1 = \{ X, \varnothing, \{a \}, \{c,d \}, \{a, c, d \}, \{b, c, d, e, f \} \}$ — clearly a topology. Now, to find the closed sets of $X$ take $X \setminus X = \varnothing$; $X \setminus \varnothing = X$; $X \setminus \{a \} = \{b, c, d, e, f \}$; $X \setminus \{ c, d \} = \{a, b, e, f \}$; $X \setminus \{a, c, d \} = \{b, e, f \}$; $X \setminus \{b, c, d, e, f \} = \{a \}$. So, we see that $\varnothing, X, \{b, c, d, e, f \}, \{a, b, e, f \}, \{b, e, f \}, \{ a \}, $ are closed sets, respectively to $(X, \oo_1)$.
+\end{ex} 
+\newpage 
+\section{Algebraic Geometry}
+This chapter will introduce some of the basic themes of \textit{IDA}. The geometry we are interested in concerns \textit{affine varieties}, which are curves and surfaces (and higher dimensional objects) defined by polynomial equations. To understand affine varieties, we need some algebra, and in particular, we will need to study ideals in the polynomial ring $k [x_1, \ldots, x_n]$. 
+\subsection{Polynomials and Affine Space:} 
+
+
+The most commonly used fields will be:
+\begin{itemize}
+\item The rational numbers $\qq$: the field for most of our counter examples.
+\item The real numbers $\rr$: the field for drawing pictures of curves and surfaces
+\item The complex numbers $\cc$: the field for proving many of our theorems. 
+\item The polynomial ring $R[x]$: should be read as ``Ring of polynomials in the indeterminant $x$ over the field $R$."
+\end{itemize}
+
+I feel as if we should first discuss a little about the polynomial ring $k[x_1, \ldots , x_n]$ before we proceed into later topics since they're a prominent and frequent concept. 
+
+ Firstly, $k[x]$ means the ring containing all the polynomials whose coefficients are in the field $k$ and in a single variable/indeterminant $x$. For example, if $k$ is the field $\rr$ in the indeterminant $x$, then the polynomials such as $x^2 + 2x$ or $x^{10} - 1$ all belong to our indeterminant $x$ since its coefficients belong to $\rr$ and it's in one indeterminant, i.e., $x_1$. 
+
+Then, more generally, a polynomial $f(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n \in k[x]$ if and only if the coefficients $a_0, a_1, \ldots, a_n \in k$ (are in the ring $k$).
+
+In $k[x,y]$, the only difference is that we are in two variables.; you'll have the polynomial $g(x) = b_0 y + b_1 x^2 y^3 + \cdots + b_n x^n y^{n+1} \in k[x, y]$ if and only if its coefficients $b_0, b_1, \ldots, b_n$ are in the field $k$.  
+
+\begin{ex} $$f(x) = x^2 - 3$$ From this polynomial, we see that the coefficients are $1$, ``in front" of $x^2$, and the constant coefficient is $-3$. Since $ -3, 1 \in \rr$, and in conjunction with our polynomial, we have $f(x) = x^2 - 3 \in \rr[x]$. Furthermore, the polynomial also belongs to the polynomial field $\qq$,  $f(x) = x^2 - 3 \in \qq[x]$, since $-3$ and $1$ are also rational numbers. Lastly, the polynomial also belong to the polynomial field $\cc$, $f(x) = x^2 - 3 \in \cc[x]$, since $-3, 1 \in \cc$. Recall $$\nn \subset \zz \subset \qq \subset \rr \subset \cc .$$
+\end{ex}
+
+\begin{ex} $$a(x, y) = x^{10} y - y^{10} x $$
+We see that $(x, y) = x^{10} y - y^{10} x \notin \rr[x]$ since, although the coefficients surely are real, we are in two indeterminants, not just one. However, $(x, y) = x^{10} y - y^{10} x \in \rr[x, y]$ because its coefficients belong to $\rr$ and it's in two indeterminants. Using the same reasoning from the previous example, we see that $(x, y) = x^{10} y - y^{10} x \in \qq[x,y]$. Furthermore, we could assert that $a(x, y) = x^{10}y-y^{10} x \in \rr[x, y, z ]$. Weird, right? The reason that it also lies in the indeterminant $z$ is because $z$ is evaluated at $z^0=1$. Looking at $a(x, y, z) = x^{10}y-y^{10} x \in \rr[x, y, z ]$, we have the same polynomial as $a(x, y)$, however, $z$ is being evaluated at $z^0$ again. (This phenomenon is going to be very common in algebraic geometry. For instance, when we look at projective geometry, it's quite often that we will see $a(x, y, z)$ but $z$ being evaluated at $z^0=1$, and we'll end up with something which belongs to some ring of polynomials in only two indeterminants rather than three.)
+\end{ex}
+
+
+\begin{defi} A \textup{\textbf{monomial}} in $x_1, \ldots, x_n$ is a product of the form \[ x_1^{\alpha_1} \cdot x_2^{\alpha_2} \cdot x_3^{\alpha_3} \cdots x_n^{\alpha_n},  \] where all of the exponents $\alpha_1, \ldots, \alpha_n$ are nonnegative integers. The \textup{\textbf{total degree}} of this monomial is the sum $\alpha_1 + \cdots + \alpha_n$. 
+\end{defi}
+
+The notion of a monomial can be excessive to write out in later definitions, so we can turn to substituting expressions to reduce: let $\alpha = (\alpha_1, \ldots, \alpha_n )$ be an $n$-tuple of nonnegative integers. Then we set $$x^{\alpha} = x_1^{\alpha_1} \cdot x_2^{\alpha_2} \cdot x_3^{\alpha_3} \cdots x_n^{\alpha_n}.$$
+When $\alpha = (0, \ldots, 0)$ we see that $x^{\alpha} = 1$. We also let $|\alpha| = \alpha_1 + \cdots + \alpha_n$ denote the total degree of the monomial $x^{\alpha}$.
+
+\begin{defi} A \textup{\textbf{polynomial}} $f$ in $x_1, \ldots, x_n$ with coefficients in $k$ is a finite linear combination (with coefficients in $k$) of monomials. We will write a polynomial $f$ in the form $$f = \sum_{\alpha} a_{\alpha} x^{\alpha}, \gap a_{\alpha} \in k, $$ where the sum is over a finite number of $n$-tuples $\alpha = (\alpha_1, \ldots, \alpha_n )$. The set of all polynomials in $x_1, \ldots , x_n$ with coefficients in $k$ is denoted $k \left[x_1, \ldots , x_n\right]$.
+\end{defi}
+
+When dealing with polynomials in a smaller number of variables, we will usually dispense with subscripts. Thus, polynomials in one, two, and three variables lie in $k[x], k[x,y]$, and $k[x,y,z]$, respectively. For example, $$f = 2x^3 y^2 z + \frac{3}{2} y^3 z^3 - 3xyz + y^2$$ is a polynomial in $\qq [x,y,z]$. We will usually use the letters $f, g, h, p, q, r$ to refer to polynomials. 
+
+We use the following terminology in dealing with polynomials.
+
+
+\begin{defi} Let $f = \sum_{\alpha} a_{\alpha} x^{\alpha}$ be a polynomial $k \left[x_1, \ldots , x_n\right]$.
+\begin{enumerate}[(i)]
+\item We call $a_\alpha$ the \textup{\textbf{coefficient}} of the monomial $x^{\alpha}$.
+\item If $a_\alpha \neq 0$, then we call $a_{\alpha} x^{\alpha}$ a \textup{\textbf{term}} of $f$.
+\item The \textup{\textbf{total degree}} of $f$, denoted $\degg (f)$, is the maximum $| \alpha|$ such that the coefficient $a_{\alpha}$ is nonzero. 
+\end{enumerate}
+\end{defi}
+\begin{ex} The polynomial $f= 2x^3 y^2 z + \frac{3}{2} y^3 z^3 - 3xyz +y^2$ has four terms and total degree 6, $\degg (f) = 6$. 
+\end{ex}
+\begin{rem} The sum and product of two polynomials is again a polynomial. We say that a polynomial $f$ \textit{divides} a polynomial $g$ provided that $g = fh$ for some $h \in k [x_1, \ldots , x_n ]$.
+\end{rem}
+
+One can show that, under addition and multiplication, $k \left[x_1, \ldots , x_n\right]$ satisfies all of the field axioms except for the existence of multiplicative inverses (because, for example, $1/x_1$ is not a polynomial). Thus, the mathematical structure of $k \left[x_1, \ldots , x_n\right]$ is called a commutative ring, and for this reason we refer to $k \left[x_1, \ldots , x_n\right]$ as a \textit{polynomial ring}. 
+
+We now proceed to affine spaces. 
+\begin{defi} Given a field $k$ and a positive integer $n$, we define the $n$-dimensional \textup{\textbf{affine space}} over $k$ to be the set $$\mathbb{A}_k^n = \{ (a_1, \ldots, a_n ) \colon a_i \in k \}.$$  (In general, we call $k^1 = k$ the \textit{affine line} and $k^2$ the \textit{affine plane}.) 
+\end{defi}
+
+
+To clarify what an $n$-tuple means, informally: A set of $n$-numbers is called an $n$-tuple. (``Tuple" refers to an ``ordered list."). 
+
+Recall from basic algebra the two-dimensional coordinate system, the $x,y$ plane. Using this two-dimensional system, we denote coordinates on the plane by $(x,y)$. So, an example, $x=3, y =5$, $(3,5)$. We see that this a set of 2-numbers, so it's called a 2-tuple. You could choose to go one to define the three-dimensional system and find that it's a 3-tuple. 
+\begin{ex} Consider the case $k = \rr$. Here we get the affine space $\aff_{\rr}^n$.
+\end{ex} 
+
+Let us see how polynomials relate to affine space. 
+\begin{disc} The key idea is that a polynomial $\poly \in \pring$ gives a function $$f \colon k^n \to k$$ defined as follows: given $(a_1, \ldots , a_n) \in k^n$, where we replace every $x_i$ by $a_i$ in the expression for $f$. Since all coefficients also lie on $k$, this operation gives an element $f (a_1, \ldots, a_n) \in k$. (Note that $f(a_1, \ldots, a_n) \in k$ is the evaluation of the polynomial $f$ in $n$ determinants at the point $(a_1, a_2, \ldots , a_n) \in \aff_{k}^n$.)
+\end{disc}
+
+The dual nature of polynomials has some unexpected consequences. For example, the question ``is $f =$?" now has two potential meanings: is $f$ the zero polynomial? which means that all of its coefficients $a_{\alpha}$ are zero (e.g., $f = 0x^3 + 0x^2 +0x$), or is $f$ the zero function?, which means that $f(a_1, \ldots , a_n) = 0$ for all $(a_1, \ldots, a_n) \in \aff_k^n$. The surprising fact is that these two statements are not equivalent in general. For an example of how they can differ, consider the set consisting of the two elements $0$ and $1$, which can be made into a field that is denoted by $\ff_2$. Now consider the polynomial $x^2 - x = x(x-1) \in \ff_2[x]$. Since this polynomial vanishes at $0$ and $1$: $$x(x-1) = 0 \implies \text{vanishing at }x =0, 1 ,$$ we have found a nonzero polynomial which gives the zero function of the affine space $\ff_2^1$
+
+However, this will not continue if we have an infinite field.
+\begin{prop} Let $k$ be an infinite field and let $f \in k [x_1, \ldots, x_n]$. Then $f = 0$ in $k[x_1, \ldots, x_n]$ if and only if $f \colon k^n \to k$ is the zero function.
+\end{prop}
+
+
+\begin{coro} Let $k$ be an infinite field, and let $f, g \in  \pring $. Then $f = g$ in $\pring$ if and only if $f \colon k^n \to k$ and $g \colon k^n \to k$ are the same function.
+\end{coro} 
+
+\begin{theorem}[Fundamental Theorem of Algebra] Every nonconstant polynomial $f \in \cc[x]$ has a root in $\cc$.
+\end{theorem}
+
+``We say that a field $k$ is \textit{algebraically closed} if every nonconstant polynomial in $k[x]$ has a root in $k$. Thus $\rr$ is not algebraically closed (what are the roots of $x^2 + 1 $?), whereas the above theorem asserts that $\cc$ is algebraically closed. In chapter 4 we prove a powerful generalization of Theorem 1 called the Hilbert Nullstellensatz."
+
+\subsection{Affine Varieties:} 
+
+We can now define the basic geometric objects studied in \textit{IDA}.
+
+\begin{defi} Let $k$ be a field, and let $f_1, \ldots, f_n$ be polynomials in $\pring$. Then we set $$\V (f_1, \ldots , f_s) = \{ (a_1, \ldots, a_n) \in \aff^n_k \colon f_1 = f_2 = \cdots = f_s = 0 \}.$$
+\end{defi} 
+We call $\V (f_1, \ldots, f_s)$ the \textbf{affine variety} defined by $f_1, \ldots, f_s$.
+
+Thus, an affine variety $\V (f_1, \ldots, f_s) \subseteq k^n $ is the set of all solutions of the system of equations $f_1 (x_1, \ldots, x_n) = \cdots = f_s (x_1, \ldots, x_n ) = 0$. We will use the letters $V, W$, etc... to denote affine varieties.
+\newpage
+\section{Appendix A2 : Zorn’s Lemma and Maximal Ideals:}
 
 Some great lore from \textit{Topics in Commutative Ring Theory:}
 
@@ -484,8 +671,8 @@ The work showing that $\mathfrak{K}$ is a prime ideal is trivial after doing Exe
 
 Therefore $\mathfrak{K} \in \spec(R)$, and so $\spec(R)$ has a minimal prime ideal, which is in turn is a minimal prime ideal of $R$.  
 \end{proof}
-\section*{Appendix A3: Localization}
-\subsection*{Relation Machinery}
+\section{Appendix A3: Localization}
+\subsection{Appendix A3.1: Relation Machinery}
 \begin{defi} A relation $\cong$ on a set $S$ is called an \textbf{equivalence relation} if it is
 \begin{itemize}
 \item[\textup{1}.] reflexive — that is, for $x \in S$,
@@ -619,7 +806,8 @@ If a refresher is needed:
 \end{ex} 
 \begin{ex} Consider the ring $\zz \times \zz$ — that is, all ordered pairs $(a, b)$ with $a, b \in \zz$, and with addition and multiplication defined componentwise. Then an element $(a, b)$ is regular if and only if $a \neq 0$ and $b \neq 0$. However, the only elements of $\zz \times \zz$ that have inverses are $(1, 1), (1, -1), (-1, 1),$ and $(-1, -1)$.
 \end{ex} 
-\subsection{Quotient Field}
+\subsection{Appendix A3.2: Quotient Field}
+
 So, the answer is that you can't always divide by regular elements, but the very good news is that we will now show that any ring $R$ can be embedded in a ring $Q(R)$ such that every regular element of $R$ does have an inverse in $Q(R)$. An equivalence relation can be defined on an appropriate set S of ``fractions” using elements of $R$,
 \begin{defi}
 Let $R$ be a ring. The above ring $Q(R)$ of equvialence classes of fractions from $R$ whose denominators are regular elements, with addition and multiplication defined as above, is called the \textbf{total quotient ring} of $R$.
@@ -652,7 +840,7 @@ and
 
 And, once again, the definitions of multiplication and addition are well defined, and $R_T$ is a ring — together with the operations defined above, and the zero element of $R_T$ being $[0/1]$ and the multiplicative identity is $[1/1]$ (it is also standard practice to ignore the distinction between a fraction and the equivalence class represented by that fraction — that is, we normally write $a/b$ instead of $[a/b]$).
  
-\subsection{Localization Definition}\begin{defi} Let $R$ be a ring, and let $T$ be a multiplicative system of $R$. The above ring $R_T$ of equivalence classes of fractions from $R$ whose denominators are elements of $T$, with addition and multiplication defined as above, is called the \textbf{localization} of $R$ with respect to $T$, and which we read as ``$R$ localized at $T$.” 
+\subsection{Appendix A3.4: Localization Definition}\begin{defi} Let $R$ be a ring, and let $T$ be a multiplicative system of $R$. The above ring $R_T$ of equivalence classes of fractions from $R$ whose denominators are elements of $T$, with addition and multiplication defined as above, is called the \textbf{localization} of $R$ with respect to $T$, and which we read as ``$R$ localized at $T$.” 
 \end{defi} 
 \begin{ex} Let $T$ be the set of odd integers in $\zz$. Then $1 = 2(0)+1 \in T$ and if $a, b \in T$, then $a=2k_1 +1 $ and $b=2k_2 + 1$ for some $k_1, k_2 \in \zz$, and so $ab = 4k_1 k_2 +2 k_1 + 2k_2 + 1 = 2(2k_1 k_2 + k_1 + k_2) + 1$; thus, $ab \in T$ and $T$ is a multiplicative system.  The localization $\zz_T$ consists of all fractions $a/b$ such that $b$ is odd. Note that $a/b \cong c/d$ if and only if $t(ad-bc) = 0$ for some odd integer $T$, but since $\zz$ is an integral domain, then this condition is equivalent to $ad-bc = 0$ (since $0 \notin T$ and so $t \neq 0$), which is just the usual condition for two fractions to be equal. Thus, $\zz_T$ is the subring of the rationals $\qq$ consisting of fractions having odd denominators. 
 \end{ex} 
