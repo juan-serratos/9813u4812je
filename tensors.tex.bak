@@ -301,8 +301,9 @@ To formalize much of what has been said, and to include further information,
 $$ (C_{\bullet}, \partial_{\bullet }) = \left( \cdots \rightarrow C_{n+1} \xrightarrow{\partial_{n+1}} C_n \xrightarrow{\partial_n} C_{n-1} \to \cdots \right), $$
 where for each $n \in \zz$, $C_n$ is an $R$-module and $\partial_ n \in \Hom_R (C_n, C_{n-1})$ satisfies $\partial_n \partial_{n+1} = 0 := \{ 0 \}$. We often write $C_{\bullet}$ instead of $(C_{\bullet}, \partial_{\bullet })$. 
 
-The integer $n$ is called the \textbf{degree} of the $R$-modules $C_n$. The $R$-linear maps $\partial_n$ ($n \in \zz$) are called the \textbf{differential maps}. A complex $C_{\bullet}$ is called \textbf{non-negative} (resp. \textbf{positive}) if $C_n = 0$, for all $n \in \nn$ (resp. for all $n \in \zz_{n \geq 0})$. 
+The integer $n$ is called the ]\
 \end{defi}
+\newpage
 \section{Category Theory}
 \subsection{Definition and Examples}
 \begin{defi} A \textbf{category} $\mathbf{C}$ is a collection of \textbf{object} and \textbf{morphisms}, which are maps between objects. These must satisfy the following conditions: 
