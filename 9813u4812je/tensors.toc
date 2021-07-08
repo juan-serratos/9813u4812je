@@ -1,0 +1,21 @@
+\contentsline {section}{\tocsection {}{1}{Motivation}}{2}{section.1}%
+\contentsline {section}{\tocsection {}{2}{Module Theory}}{5}{section.2}%
+\contentsline {subsection}{\tocsubsection {}{2.1}{Definition and Examples}}{5}{subsection.2.1}%
+\contentsline {subsection}{\tocsubsection {}{2.2}{Module Homomorphisms}}{7}{subsection.2.2}%
+\contentsline {subsection}{\tocsubsection {}{2.3}{Direct Products and Direct Sums}}{7}{subsection.2.3}%
+\contentsline {subsection}{\tocsubsection {}{2.4}{Exact Sequences}}{8}{subsection.2.4}%
+\contentsline {section}{\tocsection {}{3}{Category Theory}}{9}{section.3}%
+\contentsline {subsection}{\tocsubsection {}{3.1}{Definition and Examples}}{9}{subsection.3.1}%
+\contentsline {section}{\tocsection {}{4}{Homology}}{11}{section.4}%
+\contentsline {section}{\tocsection {}{5}{The Grothendieck Revolution}}{12}{section.5}%
+\contentsline {subsection}{\tocsubsection {}{5.1}{Polynomials and Affine Space}}{12}{subsection.5.1}%
+\contentsline {subsection}{\tocsubsection {}{5.2}{Affine Varieties:}}{14}{subsection.5.2}%
+\contentsline {subsection}{\tocsubsection {}{5.3}{Sheaf}}{14}{subsection.5.3}%
+\contentsline {subsection}{\tocsubsection {}{5.4}{Schemes}}{14}{subsection.5.4}%
+\contentsline {section}{\tocsection {}{6}{Appendix A1. Zorn’s Lemma and Maximal Ideals}}{15}{section.6}%
+\contentsline {section}{\tocsection {}{7}{Appendix A2. Localization}}{19}{section.7}%
+\contentsline {subsection}{\tocsubsection {}{7.1}{Appendix A2.1. Relation Machinery}}{19}{subsection.7.1}%
+\contentsline {subsection}{\tocsubsection {}{7.2}{Appendix A2.2. Quotient Field}}{22}{subsection.7.2}%
+\contentsline {subsection}{\tocsubsection {}{7.3}{Appendix A2.3. Localization Definition}}{23}{subsection.7.3}%
+\contentsline {section}{\tocsection {}{8}{Appendix A3. Topology}}{25}{section.8}%
+\contentsline {subsection}{\tocsubsection {}{8.1}{Appendix A3.1. Topological Spaces}}{25}{subsection.8.1}%
