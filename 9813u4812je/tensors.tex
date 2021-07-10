@@ -65,6 +65,7 @@
 \newcommand{\tex}{\TeX}
 \newcommand{\sm}{\setminus} 
 \newcommand{\dom}{\text{Dom}}
+\DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Hom}{Hom}
 \newcommand{\sym}{\text{Sym}}
 \newcommand{\ran}{\text{Ran}}
@@ -79,6 +80,7 @@
   \fboxrule=.5pt\color{black}\fbox{\hspace{\leftmargini}\color{black}\box0}}\par}}
 
 \newcommand{\idealp}{\mathfrak{p}}
+\newcommand{\rmod}{\textit{R}-\textbf{Mod}}
 \newcommand{\idealP}{\mathfrak{P}}
 \newcommand{\ideala}{\mathfrak{a}}
 \newcommand{\idealb}{\mathfrak{b}}
@@ -314,7 +316,7 @@ $$M_1 \times M_2 \times \cdots \times M_n \; \; \textup{and} \; \; M_1 \oplus M_
 Now, if the indexing set $I$ is finite then the direct product and the direct sum coincide, and so either term is can be used; but we use the convention of using the direct sum for modules and the direct product for rings. 
 
 To include a further note about the direct sum $\bigoplus_{i \in I} M_i$, we should define what I mean by a \textit{projection}. 
-\begin{defi} A \textbf{projection} is a mapping of a set (or a mathematical structure) that is idempotent, that is, a map $\psi$ such that $\psi \circ \psi = \psi$. 
+\begin{defi}\label{def: projection} A \textbf{projection} is a mapping of a set (or a mathematical structure) that is idempotent, that is, a map $\psi$ such that $\psi \circ \psi = \psi$. 
 \end{defi} 
 
 Now, the direct sum $\bigoplus_{i \in I} M_i$ comes equipped with a projection homomorphism $\pi_j \colon \bigoplus_{i \in I} M_i \to M_i$ for each $j \in I$ and a coprojection $\alpha_j \colon M_j \to \bigoplus_{i \in I} M_i$ for each $j \in I$.
@@ -371,34 +373,34 @@ One of the goals of this paper is to establish some elementary notions in homolo
 \subsection{Definition and Examples}
 \begin{defi} A \textbf{category} $\mathbf{C}$ is a collection of \textbf{object} and \textbf{morphisms}, which are maps between objects. These must satisfy the following conditions: 
 \begin{itemize}
-\item[\textup{(i)}] Given objects $x, y \in \cat$, $\Hom_{\cat} (x, y)$ denotes the morphisms from $x$ to $y$. This may be an empty. 
-\item[\textup{(ii)}] Given objects $x, y, z \in \cat$ and morphisms $f \colon x \to y$ and $g \colon y \to z$, the composition $g \circ f \colon x \to z$ is defined. That is, a dotted arrow exists in the following diagram that makes it commute 
+\item[\textup{(i)}] Given objects $A, B \in \cat$, $\Hom_{\cat} (A, B)$ denotes the morphisms from $A$ to $B$. This may be an empty. 
+\item[\textup{(ii)}] Given objects $A, B, C,  \in \cat$ and morphisms $f \colon A \to B$ and $g \colon B \to C$, the composition $g \circ f \colon A \to C$ is defined. That is, a dotted arrow exists in the following diagram that makes it commute 
 \[ 
 \begin{tikzcd}
-x \arrow[rrdd, "f"] \arrow[dd, "g \, \circ \, f"', dotted] &  &                   \\
+A \arrow[rrdd, "f"] \arrow[dd, "g \, \circ \, f"', dotted] &  &                   \\
                                              &  &                   \\
-z                                            &  & y \arrow[ll, "g"]
+C                                            &  & B \arrow[ll, "g"]
 \end{tikzcd}
 \] 
-\item[\textup{(iii)}] Given objects $x, y, z, w \in \cat$ and morphisms $f \colon x \to y$, $g \colon y \to z$, $h \colon z \to w$, composition is associative; that is, $h \circ ( g \circ f) = (h \circ g) \circ f \colon x \to w$. These morphisms are represented by the following commutative diagram (note, no dotted line): 
+\item[\textup{(iii)}] Given objects $A, B, C, D \in \cat$ and morphisms $f \colon A \to B$, $g \colon B \to C$, $h \colon C \to D$, composition is associative; that is, $h \circ ( g \circ f) = (h \circ g) \circ f \colon A \to D$. These morphisms are represented by the following commutative diagram (note, no dotted line): 
 \[
 \begin{tikzcd}
-x \arrow[ddd, "f"'] \arrow[rrr, "h \, \circ \, ( g \, \circ \, f) \, = \, (h \, \circ \, g) \, \circ \, f"] \arrow[rrrddd, "\; \; \; \; \; \; h \, \circ \, y"] &  &  & w                   \\
+A \arrow[ddd, "f"'] \arrow[rrr, "h \, \circ \, ( g \, \circ \, f) \, = \, (h \, \circ \, g) \, \circ \, f"] \arrow[rrrddd, "\; \; \; \; \; \; h \, \circ \, B"] &  &  & D                   \\
                                                          &  &  &                     \\
                                                          &  &  &                     \\
-y \arrow[rrr, "g"'] \arrow[rrruuu, "g \, \circ \, f \; \; \; \; \; \; "]                  &  &  & z \arrow[uuu, "h"']
+B \arrow[rrr, "g"'] \arrow[rrruuu, "g \, \circ \, f \; \; \; \; \; \; "]                  &  &  & C \arrow[uuu, "h"']
 \end{tikzcd}
 \]
-\item[\textup{(iiii)}] Every object, $x \in \cat$, has an identity map $1_x \colon x \to x$ such that, for any $f \colon x \to y$, $f \circ 1_x = 1_y \circ f = f \colon x \to y$. This saying that the following diagram commutes
+\item[\textup{(iiii)}] Every object, $A \in \cat$, has an identity map $1_A \colon A \to A$ such that, for any $f \colon A \to B$, $f \circ 1_A = 1_B \circ f = f \colon A \to B$. This saying that the following diagram commutes
 \[
 \begin{tikzcd}
-x \arrow[ddd, "1_x"'] \arrow[rrrddd, "f"] &  &  &                    \\
+A \arrow[ddd, "1_A"'] \arrow[rrrddd, "f"] &  &  &                    \\
                                         &  &  &                    \\
                                         &  &  &                    \\
-x \arrow[rrrddd, "f"] \arrow[rrr, "f"]  &  &  & y \arrow[ddd, "1_y"] \\
+A \arrow[rrrddd, "f"] \arrow[rrr, "f"]  &  &  & B \arrow[ddd, "1_B"] \\
                                         &  &  &                    \\
                                         &  &  &                    \\
-                                        &  &  & y                 
+                                        &  &  & B                 
 \end{tikzcd}
 \]
 \end{itemize}
@@ -421,7 +423,7 @@ x \arrow[rrrddd, "f"] \arrow[rrr, "f"]  &  &  & y \arrow[ddd, "1_y"] \\
 \end{rem} 
 \begin{defi} Let $\cat$ be a category and let $X_1$ and $X_2$ be objects of $\cat$. A \textbf{product} of $X_1$ and $X_2$ is an object $X$ (often denoted $X_1 \times X_2$) together with a pair of morphisms $\pi_1 \colon X \to X_1$, $\pi_2 \colon X \to X_2$ that satisfy the following universal property:
 \begin{itemize}
-\item[\textup{$\bullet$}] for every object $Y$ and every pair of morphisms$f_1 \colon Y \to X_1$, $f_2 \colon Y \to X_2$ there exists a \textbf{unique} morphism $f \colon Y \to  X_1 \times X_2$ such that the following diagram commutes: 
+\item[\textup{$\bullet$}] for every object $Y$ and every pair of morphisms $f_1 \colon Y \to X_1$, $f_2 \colon Y \to X_2$ there exists a \textbf{unique} morphism $f \colon Y \to  X_1 \times X_2$ such that the following diagram commutes: 
 \end{itemize}
 \[
 \begin{tikzcd}
@@ -431,12 +433,12 @@ X_1 &  & X_1 \times X_2 \arrow[ll, "\pi_1"] \arrow[rr, "\pi_2"']                
 \end{tikzcd}
 \]
 \end{defi} 
-\begin{rem} The unique arrow $f$ making this diagram commute is called the \textbf{product of morphisms} and is denoted $f = \langle f_1, f_2 \rangle$. The morphisms $\pi_1$ and $\pi_2$ are called the \textbf{canonical projections} or \textbf{projection morphisms}.
+\begin{rem} The unique arrow $f$ making this diagram commute is called the \textbf{product of morphisms} and is denoted $f = \langle f_1, f_2 \rangle$. The morphisms $\pi_1$ and $\pi_2$ are called the \textbf{canonical projections} or \textbf{projection morphisms} — may refer back to defintion \ref{def: projection}.
 \end{rem} 
 \begin{defi} Let $\cat$ be a category and let $X_1$ and $X_2$ be objects of $\cat$. An object is called the \textbf{coproduct} of $X_1$ and $X_2$, written $X_1 \coprod X_2$ or $X_1 \oplus X_2$, if
 \begin{itemize}
-\item[\textup{(i)}] there exists maps $i_1 \colon X_1 \to X_1 \coprod X_2$, $i_2 \colon X_2 \to X_1 \coprod X_2$, and
-\item[\textup{(ii)}] for any object $Y$ and any morphisms $f_1 \colon X_1 \to Y$ and $f_2 \colon X_2 \to Y$, there exists a unique morphism $f \colon X_1 \coprod X_2 \to Y$ such that $f_1 = f \circ i_1$ and $f_2 = f \circ i_2$. 
+\item[\textup{(i)}] there exists maps $\iota_1 \colon X_1 \to X_1 \coprod X_2$, $\iota_2 \colon X_2 \to X_1 \coprod X_2$, and
+\item[\textup{(ii)}] for any object $Y$ and any morphisms $f_1 \colon X_1 \to Y$ and $f_2 \colon X_2 \to Y$, there exists a unique morphism $f \colon X_1 \coprod X_2 \to Y$ such that $f_1 = f \circ \iota_1$ and $f_2 = f \circ \iota_2$. 
 \end{itemize}
 
 That is, the following commutative diagram commutes: 
@@ -444,15 +446,85 @@ That is, the following commutative diagram commutes:
 \begin{tikzcd}
                                      &  & Y                         &  &                                      \\
                                      &  &                           &  &                                      \\
-X_1 \arrow[rruu, "f_1"] \arrow[rr, "i_1"'] &  & X_1 \coprod X_2 \arrow[uu, "f", dotted] &  & X_2 \arrow[lluu, "f_2"'] \arrow[ll, "i_2"]
+X_1 \arrow[rruu, "f_1"] \arrow[rr, "\iota_1"'] &  & X_1 \coprod X_2 \arrow[uu, "f", dotted] &  & X_2 \arrow[lluu, "f_2"'] \arrow[ll, "\iota_2"]
 \end{tikzcd}
 \]
 \end{defi} 
 \begin{rem} The unique arrow $f$ making this diagram commute may be denoted by $f = f_1 \coprod f_2$ or $f = f_1 \oplus f_2$. 
 \end{rem} 
-\begin{rem} Although, in Definition 3, I've chosen $\coprod$ to represent the coproduct, I will be choosing $\bigoplus$ for later matters. The main reason I did this was to show how the coproduct of a set of objects is essentially their union — $\coprod$ vaguely represents $\bigcup$, and this was appropriate since coproducts have the structural properties of a union.
+\begin{rem} Although, in definition 15 I've chosen $\coprod$ to represent the coproduct, I will be choosing $\bigoplus$ for later matters. The main reason I did this was to show how the coproduct of a set of objects is essentially their union — $\coprod$ vaguely represents $\bigcup$, and this was appropriate since coproducts have the structural properties of a union.
 \end{rem} 
 
+Since this may be our first time seeing some difficult categorical construction, we should make clear that the projection maps $\pi_1$ and $\pi_2$ are really just mapping back to their factors, i.e., $X_1$ and $X_2$. And coproducts have maps $\iota_1$, $\iota_2$, from their factors. Additionally, products and coproducts may coincide in some cases
+
+\textit{Examples.} Products and coproducts depend strongly on the category in use, and, in fact, some categories may not even have these constructions. 
+\begin{itemize}
+\item The main one of interest, in this paper, is in the category \rmod \, where the direct sum is the corproduct as well as the product
+\item In \textbf{Sets}, the \textit{union} is a coproduct; the Cartesian product is the product; and so, coproducts and products are distinctively different. 
+\item In \textbf{Grp}, the \textit{free product} is the coproduct. 
+\end{itemize}
+
+For the important case of equivalences between objects in categories, we have categories with a special property that, intuitively, says that ``we can also go back, and reproduce the same information in one category in the other up-to \textit{isomorphism}."
+
+\begin{defi} Let $X$ and $Y$ be objects in a category $\cat$. An \textbf{isomorphism} is a pair of morphisms $$X \xrightarrow{f} Y \xrightarrow{g} X$$
+such that
+
+\begin{itemize}
+\item[$(a)$] $g \circ f = 1_X$, and
+\item[$(b)$] $f \circ g = 1_Y$.
+\end{itemize}
+
+If there exists an isomorphism between $X$ and $Y$, then we say that $X$ and $Y$ are \textbf{isomorphic} and denote it by $X \cong Y$. 
+\end{defi} 
+
+We see in this definition that $g$ not only goes back to $X$ by, essentially, being in the opposite direction as $f$, but also ``undoes $f$", in the sense that applying $g$ after $f$ is like doing nothing at all. And just as well, $f$ undoes $g$. The notation for $g$, i.e., the inverse of $f$, is often denoted as $f^{-1} := g$, and so these should be seen as interchangeable if the conditions for an isomorphism hold. 
+\begin{defi} A morphism $f \colon A \to B$ between objects of a category is: 
+\begin{itemize}
+\item[$(1)$] a \textbf{monomorphism} if, for any other object $C$ and any two morphisms $g_1, g_2 \colon C \to A$
+$$ f \circ g_1 = f \circ g_2 \implies g_1 = g_2 $$
+\item[$(2)$] an \textbf{epimorphism} if, for any other object $C$ and any two morphisms $g_1, g_2 \colon B \to C$ 
+
+$$ g_1 \circ f = g_2 \circ f \implies g_1 = g_2 $$
+\end{itemize}
+
+\textit{Examples.}
+
+\begin{itemize} 
+
+\item In $\mathbf{Sets}$, the isomorphisms are bijective functions. 
+
+\item In \rmod, a module homomorphism is called a \textit{module isomorphism} if it admits an inverse homomorphism; that is, if $M, N$ are $A$-modules, $\varphi \colon M \to N$ is a module homomorphism, and $\varphi$ is a bijection, then $M \cong N$.  Additionally, a module homomorphism is an isomorphism if and only if it is an isomorphism between the underlying abelian groups. 
+
+\end{itemize}
+\end{defi}
+
+\subsection{Functors}
+
+A \textit{functor} between categories essentially plays the role of a morphism between categories (i.e., categories are analogous to objects and functors are analogous morphisms in this context).  
+\begin{defi} Let $\cat$ and $\mathbf{D}$ be categories. A \textbf{covariant functor} $ F \colon \cat \to \mathbf{D}$ is a function from the objects of $\cat$ to those in $\mathbf{D}$ — i.e., if $X \in \cat$, then $Y := F(X) \in \mathbf{D}$ with the following additional property:
+
+A map $F: \Hom_{\cat} (X, Y) \to \Hom_{\mathbf{D}} (F (X), F(Y))$ to each pair of objects $X, Y \in \cat$, such that the following two conditions hold:
+
+\begin{itemize}
+\item[$(i)$] $F (1_X) = 1_{F(X)}$ for every object $X \in \cat$, and 
+\item[$(ii)$] $F (g \circ f) = F (g) \circ F(f)$ for all $\cat$-morphisms $f \colon X \to Y$ and $g \colon Y \to Z$. 
+\end{itemize}
+\end{defi} 
+\begin{defi} Let $\cat$ and $\mathbf{D}$ be categories. A \textbf{contravariant functor} $ F \colon \cat \to \mathbf{D}$ is a function from the objects of $\cat$ to those in $\mathbf{D}$ — i.e., if $X \in \cat$, then $Y := F(X) \in \mathbf{D}$ with the following additional property:
+
+A map $F: \Hom_{\cat} (X, Y) \to \Hom_{\mathbf{D}} (F (Y), F(X))$ to each pair of objects $X, Y \in \cat$, such that the following two conditions hold:
+
+\begin{itemize}
+\item[$(i)$] $F (1_X) = 1_{F(X)}$ for every object $X \in \cat$, and 
+\item[$(ii)$] $F (g \circ f) = F (f) \circ F(g)$ for all $\cat$-morphisms $f \colon X \to Y$ and $g \colon Y \to Z$. 
+\end{itemize}
+\end{defi} 
+
+When we talk of a \textbf{functor} without description of it being covariant or contravariant, we usually mean a covariant functor, so that should be your expectation if that situation arises. 
+
+A great example, I think, has to do with the relationship between the category of groups and rings:
+
+If \textbf{Grp} is the category of groups and \textbf{Ring} is that of commutative rings, we can define a functor $G_n \colon \mathbf{Ring} \to \mathbf{Grp}$ that send a commutative ring $R \in \mathbf{Ring}$ to $GL_{n} (R)$, the group of $n \times n$ matrices whose determinant is a unit of $R$. Since homomorphisms of rings send units to units, it follows for a ring homomorphism between rings $R$ and $S$, $\varphi \colon R \to S$ induces a natural homomorphism of groups $G_n (\varphi) \colon \GL_{n} (R) \to \GL_n (S)$, i.e., $\Hom_{\mathbf{Ring}} (R, S) \to \Hom_{\mathbf{Grp}} ( \GL_n (R), \GL_n (S))$. 
 \section{Homology}
 \newpage 
 
